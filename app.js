@@ -24,9 +24,9 @@ app.engine('handlebars', engine({
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
-// Routes
+// Import routes
 const indexRoutes = require('./routes/index');
-app.use('/', indexRoutes);
+app.use('/', indexRoutes); // Ensure routes are used here
 
 // Error handling middleware
 app.use((req, res, next) => {

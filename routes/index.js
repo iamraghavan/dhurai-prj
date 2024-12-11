@@ -13,4 +13,12 @@ router.get('/contact', (req, res) => {
   res.render('pages/contact', { title: 'Contact Us' });
 });
 
+router.get('/services/paid-search', (req, res) => {
+  console.log('Rendering Paid Search page');
+  res.render('pages/services/paid-search', { title: 'Paid Search' });
+});
+
+
+
+
 module.exports = router;
