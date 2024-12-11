@@ -1,0 +1,8 @@
+[build]
+  publish = "public"          # Directory for static files
+  functions = "src/functions" # Directory for serverless functions
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/app"
+  status = 200
