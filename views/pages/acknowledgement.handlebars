@@ -1,0 +1,53 @@
+<div class="team__detail-page">
+
+  <!-- Team area start -->
+  <section class="team__detail">
+    <div class="container line pb-140">
+      <div class="line-3"></div>
+      <div class="row">
+        <div
+          class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 offset-lg-0 offset-md-2"
+        >
+          <div class="team__member-img">
+            <img
+              src="https://images.stockcake.com/public/f/e/4/fe432bf6-fa42-4fac-88df-73d63f220eb7_large/techie-at-work-stockcake.jpg"
+              alt="Team Member Picture"
+              data-speed="0.5"
+              style="translate: none; rotate: none; scale: none; transform: translate(0px, 254.75px); will-change: transform; data-lag=0"
+            />
+          </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12">
+          <div class="sec-title-wrapper pt-120">
+            <h2 class="team__member-name-7 animation__char_come">Thank you for
+              your submission!</h2>
+            <h3 class="team__member-role-7 animation__char_come">Our team will
+              contact you soon.</h3>
+            <p>{{enquiryDetails.message}}</p>
+          </div>
+          <div class="team__member-work text-white">
+            <h4 class="work-title">Enquiry Details:</h4>
+            <ul>
+              <li><strong>Enquiry ID:</strong>
+                {{enquiryDetails.enquiry_id}}</li>
+              <br />
+              <li><strong>Name:</strong> {{enquiryDetails.name}}</li><br />
+              <li><strong>Email:</strong> {{enquiryDetails.email}}</li><br />
+              <li><strong>Phone:</strong> {{enquiryDetails.phone}}</li><br />
+              <li><strong>Subject:</strong> {{enquiryDetails.subject}}</li><br
+              />
+              <li><strong>Message:</strong> {{enquiryDetails.message}}</li><br
+              />
+              <li><strong>Date of Enquiry:</strong>
+                {{enquiryDetails.date_of_enquiry}}</li><br />
+              <li><strong>Status:</strong> {{enquiryDetails.status}}</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Team area end -->
+
+</div>
