@@ -21,14 +21,6 @@ const handlebars = exphbs.create({
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-// Firebase Admin SDK setup
-const serviceAccount = require('./firebase-service-account.json'); // Ensure this file is in the root directory
-firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-  databaseURL: "https://portfolio-4bf1c-default-rtdb.firebaseio.com" // Replace with your Firebase database URL
-});
-
-const db = firebaseAdmin.database();
 
 // Use Helmet for security headers
 app.use(helmet());
