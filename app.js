@@ -1,36 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
+const bodyParser = require('body-parser');
 const { engine } = require('express-handlebars');
 const helmet = require('helmet');
-
-const exphbs = require('express-handlebars');
-const helpers = require('handlebars-helpers')();
-
-// Initialize Firebase and routes
-const firebaseAdmin = require('firebase-admin');
 require('dotenv').config();
 
 const app = express();
-
-const handlebars = exphbs.create({
-  helpers: helpers
-});
-
-// Set Handlebars as the view engine
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
-
 
 // Use Helmet for security headers
 app.use(helmet());
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json()); // for parsing application/json
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static assets
+app.use(express.json());
 
-// Configure Handlebars
+// Serve the 'assets' folder inside 'public' folder as static
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')));
+
+// Set Handlebars as the view engine
 app.engine('handlebars', engine({
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, 'views/layouts'),

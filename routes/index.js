@@ -29,18 +29,44 @@ router.get('/about', (req, res) => {
 });
 
 
-// Render Paid Search Services page
-router.get('/services/paid-search', (req, res) => { 
-  console.log('Rendering Paid Search page');
-  res.render('pages/services/paid-search', { title: 'Paid Search' });
-});
-
 // Render Contact Us page (can be an alias for /contact)
 router.get('/contact-us', (req, res) => {
   res.render('pages/contact', { title: 'Contact us' });
 });
 
-// Handle form submission for contact
+
+router.get('/services/paid-search', (req, res) => { 
+  res.render('pages/services/paid-search', { title: 'Paid Search' });
+});
+
+router.get('/services/amazon', (req, res) => {
+  res.render('pages/services/amazon', { title: 'Amazon Ads' });
+});
+
+router.get('/services/lead-generation', (req, res) => {
+  res.render('pages/services/lead-generation', { title: 'Lead Generation' });
+});
+
+router.get('/services/seo', (req, res) => {
+  res.render('pages/services/seo', { title: 'SEO' });
+});
+
+router.get('/services/lifecycle-marketing', (req, res) => {
+  res.render('pages/services/lifecycle-marketing', { title: 'Lifecycle Marketing' });
+});
+
+router.get('/services/ecommerce', (req, res) => {
+  res.render('pages/services/ecommerce', { title: 'Ecommerce' });
+});
+
+
+router.get('/services/paid-social', (req, res) => {
+  res.render('pages/services/paid-social', { title: 'Paid Social' });
+});
+
+router.get('/services/creative-services', (req, res) => {
+  res.render('pages/services/creative-services', { title: 'Creative Services' });
+});
 
 router.get('/contact', async (req, res) => {
   const status = req.query.status;
@@ -78,7 +104,6 @@ router.get('/contact', async (req, res) => {
   });
 });
 
-
 // Handle form submission for contact
 router.post('/contact/submit', async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
@@ -108,8 +133,8 @@ router.post('/contact/submit', async (req, res) => {
       timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP // Firebase server timestamp
     });
 
-    // Send email with form details
-    sendEmail(name, email, phone, subject, message);
+    // Send email with form details, now passing date_of_enquiry
+    sendEmail(name, email, phone, subject, message, date_of_enquiry);
 
     // Redirect to success page with enquiry_id
     res.redirect(`/contact?status=success&id=${enquiry_id}`);
@@ -120,7 +145,9 @@ router.post('/contact/submit', async (req, res) => {
 });
 
 // Function to send email with the form details
-function sendEmail(name, email, phone, subject, message) {
+function sendEmail(name, email, phone, subject, message, date_of_enquiry) {
+  const nodemailer = require('nodemailer');
+
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
@@ -134,12 +161,82 @@ function sendEmail(name, email, phone, subject, message) {
     }
   });
 
+  const emailTemplate = `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+          }
+          .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+          }
+          .header h1 {
+            margin: 0;
+            font-size: 24px;
+          }
+          .body {
+            padding: 20px;
+            line-height: 1.6;
+          }
+          .footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+          }
+          .footer a {
+            color: #007bff;
+            text-decoration: none;
+          }
+          @media only screen and (max-width: 600px) {
+            .container {
+              padding: 10px;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>New Contact Form Submission</h1>
+          </div>
+          <div class="body">
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Message:</strong> ${message}</p>
+            <p><strong>Date of Enquiry:</strong> ${date_of_enquiry}</p>
+          </div>
+          <div class="footer">
+            <p>Thank you for reaching out to us! We'll get back to you as soon as possible.</p>
+            <p><a href="http://jsraghavan.me" target="_blank">Visit our website</a></p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
   const mailOptions = {
     from: 'letstalk@bumblebees.co.in', // Sender address
     to: 'duraiprofile@gmail.com',
     bcc: 'raghavanofficials@gmail.com',
     subject: `New Contact Form Submission: ${subject}`,
-    text: `You have a new message from ${name} (${email}).\n\nPhone: ${phone}\nSubject: ${subject}\n\nMessage:\n${message}`
+    html: emailTemplate,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -150,5 +247,7 @@ function sendEmail(name, email, phone, subject, message) {
     }
   });
 }
+
+
 
 module.exports = router;
